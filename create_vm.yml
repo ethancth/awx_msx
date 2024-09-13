@@ -5,9 +5,9 @@
   tasks:
     - name: "Create VM in vCenter"
       vmware_guest:
-        hostname: "{{ vcenter_hostname }}"
-        username: "{{ vcenter_username }}"
-        password: "{{ vcenter_password }}"
+        hostname: "{{ lookup('env', 'VCENTER_HOSTNAME')}}"
+        username: "{{ lookup('env', 'VMWARE_USER') }}"    
+        password: "{{ lookup('env', 'VMWARE_PASSWORD') }}"
         validate_certs: no
         datacenter: "{{ datacenter_name }}"
         folder: "{{ folder_name }}"
