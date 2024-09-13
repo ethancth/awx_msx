@@ -5,9 +5,9 @@
   tasks:
     - name: Clone VM from template
       community.vmware.vm_vm_vm_drs_rule:
-        hostname: "{{ vcenter_hostname }}"
-        username: "{{ vcenter_username }}"
-        password: "{{ vcenter_password }}"
+        hostname: "{{ lookup('env', 'VCENTER_HOSTNAME')}}"
+        username: "{{ lookup('env', 'VMWARE_USER') }}"    
+        password: "{{ lookup('env', 'VMWARE_PASSWORD') }}"
         cluster: "{{ cluster_name }}"
         validate_certs: no
         name: "{{ vm_name }}"
