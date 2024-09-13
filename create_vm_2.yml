@@ -6,8 +6,8 @@
     - name: "Create VM in vCenter"
       vmware_guest:
         hostname: "{{ vcenter_hostname }}"
-        username: "{{ vcenter_username }}"
-        password: "{{ vcenter_password }}"
+        username: "{{ lookup('env', 'VMWARE_USER') }}"    
+        password: "{{ lookup('env', 'VMWARE_PASSWORD') }}"
         validate_certs: no
         datacenter: "{{ datacenter_name }}"
         folder: "{{ folder_name }}"
@@ -20,7 +20,6 @@
           memory_mb: 2048                        # Memory in MB
           num_cpus: 2                            # Number of vCPUs
           scsi: paravirtual
-          nic: vmxnet3
         networks:
           - name: "{{ network_name }}"
             ip: "{{ ip_address }}"

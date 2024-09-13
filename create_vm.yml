@@ -1,41 +1,24 @@
 ---
-- name: Create a VM in vCenter
+- name: Provision VM on VMware vCenter
   hosts: localhost
   gather_facts: no
   tasks:
-    - name: "Create VM in vCenter"
-      vmware_guest:
-        hostname: "{{ lookup('env', 'VCENTER_HOSTNAME')}}"
+    - name: Clone VM from template
+      community.vmware.vm_vm_vm_drs_rule:
+        hostname: "{{ vcenter_hostname }}"
         username: "{{ lookup('env', 'VMWARE_USER') }}"    
         password: "{{ lookup('env', 'VMWARE_PASSWORD') }}"
-        validate_certs: no
-        datacenter: "{{ datacenter_name }}"
-        folder: "{{ folder_name }}"
-        name: "{{ vm_name }}"
-        template: "{{ template_name }}"          # Template to clone from
         cluster: "{{ cluster_name }}"
+        validate_certs: no
+        name: "{{ vm_name }}"
+        template: "{{ template_name }}"
         datastore: "{{ datastore_name }}"
-        state: poweredon                         # Options: present, absent, poweredon, poweredoff
+        network: "{{ network_name }}"
+        state: powered_on
         hardware:
-          memory_mb: 2048                        # Memory in MB
-          num_cpus: 2                            # Number of vCPUs
-          scsi: paravirtual
-        networks:
-          - name: "{{ network_name }}"
-            ip: "{{ ip_address }}"
-            netmask: "{{ netmask }}"
-            gateway: "{{ gateway }}"
-            type: static                         # Options: dhcp, static
-        disk:
-          - size_gb: 20                          # Disk size in GB
-            type: thin                           # Disk type: thin, thick, eagerzeroed
-            datastore: "{{ datastore_name }}"
-        customvalues:
-          - key: notes                           # Adding custom attributes
-            value: "Provisioned by Ansible"
-      register: deploy_vm_result
-
-    - name: "Display VM creation result"
-      debug:
-        var: deploy_vm_result
-        
+          num_cpus: "{{ vm_cpu }}"
+          memory_mb: "{{ vm_memory }}"
+          disk:
+            size_gb: "{{ vm_disk_size }}"
+        wait_for_ip_address: yes
+      delegate_to: localhost
