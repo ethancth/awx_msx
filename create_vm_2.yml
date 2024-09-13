@@ -27,7 +27,7 @@
             gateway: "{{ gateway }}"
             type: static                         # Options: dhcp, static
         disk:
-          - size_gb: 20                          # Disk size in GB
+          - size_gb: 100                          # Disk size in GB
             type: thin                           # Disk type: thin, thick, eagerzeroed
             datastore: "{{ datastore_name }}"
         customvalues:
