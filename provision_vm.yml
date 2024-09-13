@@ -1,0 +1,19 @@
+---
+- name: Get all snapshots for a specific VM in vCenter
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Retrieve snapshot information for a VM
+      vmware_guest_snapshot_info:
+        hostname: "{{ vcenter_hostname }}"       # vCenter server address
+        username: "{{ lookup('env', 'VMWARE_USER') }}"    # vCenter username, retrieved from env or AWX credential
+        password: "{{ lookup('env', 'VMWARE_PASSWORD') }}" # vCenter password, retrieved from env or AWX credential
+        validate_certs: no                       # Disable SSL validation if needed
+        datacenter: "{{ datacenter_name }}"      # Name of the datacenter where the VM is located
+        folder: "{{ folder_name }}"              # Folder path where the VM is located
+        name: "{{ vm_name }}"                    # The name of the VM
+      register: snapshot_info
+
+    - name: Display snapshot information
+      debug:
+        var: snapshot_info
