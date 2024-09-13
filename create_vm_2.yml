@@ -30,9 +30,6 @@
           - size_gb: 100                          # Disk size in GB
             type: thin                           # Disk type: thin, thick, eagerzeroed
             datastore: "{{ datastore_name }}"
-        customvalues:
-          - key: notes                           # Adding custom attributes
-            value: "Provisioned by Ansible"
       register: deploy_vm_result
 
     - name: "Display VM creation result"
