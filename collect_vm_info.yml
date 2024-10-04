@@ -8,4 +8,6 @@
         username: "{{ lookup('env', 'VMWARE_USER') }}"
         password: "{{ lookup('env', 'VMWARE_PASSWORD') }}"
         vm_type: vm
-        register: vm_info
+
+    - debug:
+        var: vm_info.virtual_machines
