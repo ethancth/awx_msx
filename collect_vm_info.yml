@@ -3,11 +3,13 @@
   hosts: localhost
   gather_facts: no
   tasks:
-    - community.vmware.vmware_vm_info:
+    - name: Retrieve snapshot information for a VM
+      community.vmware.vmware_vm_info:
         hostname: "{{ vcenter_hostname }}"
         username: "{{ lookup('env', 'VMWARE_USER') }}"
         password: "{{ lookup('env', 'VMWARE_PASSWORD') }}"
         vm_type: vm
+      
 
     - debug:
         var: vm_info.virtual_machines
