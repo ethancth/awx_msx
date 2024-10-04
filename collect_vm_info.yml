@@ -1,8 +1,12 @@
-name: Gather only registered virtual machines
-  community.vmware.vmware_vm_info:
-    hostname: "{{ vcenter_hostname }}"
-      username: "{{ lookup('env', 'VMWARE_USER') }}"
-      password: "{{ lookup('env', 'VMWARE_PASSWORD') }}"
-    vm_type: vm
-  delegate_to: localhost
-  register: vm_info
+---
+- name: Gather Info
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - community.vmware.vmware_vm_info:
+        hostname: "{{ vcenter_hostname }}"
+        username: "{{ lookup('env', 'VMWARE_USER') }}"
+        password: "{{ lookup('env', 'VMWARE_PASSWORD') }}"
+        vm_type: vm
+        delegate_to: localhost
+        register: vm_info
