@@ -11,6 +11,5 @@
         vm_type: vm
       delegate_to: localhost
       register: template_info
-
     - debug:
-        var: vm_info.virtual_machines
+        var: template_info.virtual_machines
